@@ -44,6 +44,8 @@ func TestOAuth2Provider(t *testing.T) {
 	t.Run("AuthorizeLoginRedirect", testAuthorizeLoginRedirect)
 
 	t.Run("OAuth2WellKnown", testOAuth2WellKnown)
+	t.Run("OAuthSourceWithSpace", testOAuthSourceWithSpace)
+	// TODO: move more tests as sub-tests here, avoid unnecessary PrepareTestEnv
 }
 
 func testAuthorizeNoClientID(t *testing.T) {
@@ -1096,9 +1098,7 @@ func TestSignInOauthCallbackSyncSSHKeys(t *testing.T) {
 
 // Checks if an OAuth provider with spaces within the name does work,
 // with the encoding of its names in the URL (PR#37327)
-func TestOAuthSourceWithSpace(t *testing.T) {
-	defer tests.PrepareTestEnv(t)()
-
+func testOAuthSourceWithSpace(t *testing.T) {
 	mockServer := createMockServer()
 	defer mockServer.Close()
 
