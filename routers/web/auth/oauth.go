@@ -36,7 +36,11 @@ import (
 
 // SignInOAuth handles the OAuth2 login buttons
 func SignInOAuth(ctx *context.Context) {
-	authName := ctx.PathParam("provider")
+	authName, err := url.QueryUnescape(ctx.PathParam("provider"))
+	if err != nil {
+		ctx.ServerError("SignIn", err)
+		return
+	}
 	authSource, err := auth.GetActiveOAuth2SourceByAuthName(ctx, authName)
 	if err != nil {
 		ctx.ServerError("SignIn", err)
